@@ -187,15 +187,19 @@ void ControlConnection::schedule_reconnect(uint64_t ms) {
 
 void ControlConnection::reconnect(bool retry_current_host) {
   if (state_ == CONTROL_STATE_CLOSED) {
+    LOG_INFO("2536:Inside reconnect state of the current host is closed.");
     return;
   }
 
   if (!retry_current_host) {
     current_host_ = query_plan_->compute_next();
+    LOG_INFO("2536:Inside reconnect trying some other host.");
     if (!current_host_) {
       if (state_ == CONTROL_STATE_READY) {
+        LOG_INFO("2536:Inside reconnect host state is READY, reconnect it.");
         schedule_reconnect(1000); // TODO(mpenick): Configurable?
       } else {
+        LOG_INFO("2536:Inside reconnect not found any host.");
         session_->on_control_connection_error(CASS_ERROR_LIB_NO_HOSTS_AVAILABLE,
                                               "No hosts available for the control connection");
       }
@@ -214,6 +218,7 @@ void ControlConnection::reconnect(bool retry_current_host) {
                                "", // No keyspace
                                protocol_version_,
                                this);
+  LOG_INFO("2536:Inside reconnect, destroying the old and creating a new connection.");
   connection_->connect();
 }
 

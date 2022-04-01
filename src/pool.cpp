@@ -319,7 +319,7 @@ void Pool::maybe_close() {
   if (state_ == POOL_STATE_CLOSING && connections_.empty() &&
       pending_connections_.empty()) {
 
-    LOG_DEBUG("Pool(%p) closed connections to host %s",
+    LOG_INFO("2536:Pool(%p) closed connections to host %s",
               static_cast<void*>(this),
               host_->address_string().c_str());
     state_ = POOL_STATE_CLOSED;

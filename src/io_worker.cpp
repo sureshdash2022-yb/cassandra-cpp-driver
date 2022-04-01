@@ -324,7 +324,7 @@ void IOWorker::notify_pool_closed(Pool* pool) {
   bool is_critical_failure = pool->is_critical_failure();
   bool cancel_reconnect = pool->cancel_reconnect();
 
-  LOG_DEBUG("Pool for host %s closed: pool(%p) io_worker(%p)",
+  LOG_INFO("2536:Pool for host %s closed: pool(%p) io_worker(%p)",
             host->address_string().c_str(),
             static_cast<void*>(pool),
             static_cast<void*>(this));
@@ -338,6 +338,7 @@ void IOWorker::notify_pool_closed(Pool* pool) {
   } else {
     session_->notify_down_async(host->address());
     if (!is_critical_failure && !cancel_reconnect) {
+      LOG_INFO("2536:Going for host reconnect......");
       schedule_reconnect(host);
     }
   }
@@ -438,7 +439,7 @@ void IOWorker::on_execute(uv_async_t* async) {
     }
     remaining--;
   }
-
+  LOG_INFO("2536: nothing in the queue close the worker.");
   io_worker->maybe_close();
 }
 
@@ -476,7 +477,7 @@ void IOWorker::on_prepare(uv_prepare_t* prepare) {
 
 void IOWorker::schedule_reconnect(const Host::ConstPtr& host) {
   if (pools_.count(host->address()) == 0) {
-    LOG_INFO("Scheduling reconnect for host %s in %u ms on io_worker(%p)",
+    LOG_INFO("2536:Scheduling reconnect for host %s in %u ms on io_worker(%p)",
              host->address_string().c_str(),
              config_.reconnect_wait_time_ms(),
              static_cast<void*>(this));

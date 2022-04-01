@@ -165,11 +165,13 @@ Host::Ptr DCAwarePolicy::DCAwareQueryPlan::compute_next() {
     --local_remaining_;
     const Host::Ptr& host(get_next_host(hosts_, index_++));
     if (host->is_up()) {
+      LOG_INFO("2536:Inside DCAwarePolicy::DCAwareQueryPlan found next host: %s", host->hostname().c_str());
       return host;
     }
   }
 
   if (policy_->skip_remote_dcs_for_local_cl_ && is_dc_local(cl_)) {
+    LOG_INFO("2536:Inside DCAwarePolicy::DCAwareQueryPlan for dc_local: %s", Host::Ptr()->hostname().c_str());
     return Host::Ptr();
   }
 
@@ -185,6 +187,7 @@ Host::Ptr DCAwarePolicy::DCAwareQueryPlan::compute_next() {
                                                   index_++,
                                                   policy_->used_hosts_per_remote_dc_));
       if (host->is_up()) {
+        LOG_INFO("2536:Inside DCAwarePolicy::DCAwareQueryPlan found remote host: %s", host->hostname().c_str());
         return host;
       }
     }
