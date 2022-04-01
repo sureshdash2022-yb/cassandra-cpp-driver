@@ -919,7 +919,7 @@ void Session::on_execute(uv_async_t* data) {
       while (!is_done) {
         request_handler->next_host();
         if (!request_handler->current_host()) {
-          LOG_INFO("2536:Failed to get the current host: %s", request_handler->current_host()->hostname().c_str());
+          LOG_INFO("2536:Failed to get the current host");
           request_handler->set_error(CASS_ERROR_LIB_NO_HOSTS_AVAILABLE,
                                      "All connections on all I/O threads are busy");
           break;
