@@ -319,9 +319,8 @@ void Pool::maybe_close() {
   if (state_ == POOL_STATE_CLOSING && connections_.empty() &&
       pending_connections_.empty()) {
 
-    LOG_INFO("2536:Pool(%p) closed connections to host %s",
-              static_cast<void*>(this),
-              host_->address_string().c_str());
+    LOG_INFO("2536:Pool(%p) closed connections to host.",
+              static_cast<void*>(this));
     state_ = POOL_STATE_CLOSED;
     io_worker_->notify_pool_closed(this);
   }
