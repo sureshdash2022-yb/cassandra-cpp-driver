@@ -439,7 +439,7 @@ void IOWorker::on_execute(uv_async_t* async) {
     }
     remaining--;
   }
-  LOG_INFO("2536: nothing in the queue close the worker.");
+  LOG_DEBUG("2536: nothing in the queue close the worker.");
   io_worker->maybe_close();
 }
 
