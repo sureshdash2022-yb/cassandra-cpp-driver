@@ -637,6 +637,7 @@ void Session::on_event(const SessionEvent& event) {
       break;
 
     case SessionEvent::NOTIFY_DOWN:
+      LOG_INFO("2536: connection to host:%p going down.....", event.address);
       control_connection_.on_down(event.address);
       break;
 

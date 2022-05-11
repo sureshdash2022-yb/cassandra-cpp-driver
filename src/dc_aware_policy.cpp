@@ -78,6 +78,9 @@ void DCAwarePolicy::on_add(const Host::Ptr& host) {
 
   if (dc == local_dc_) {
     local_dc_live_hosts_->push_back(host);
+    LOG_INFO(
+        "2536: Adding new host in the local_dc_live_hosts_ list, total "
+        "live_hosts count: %zu", local_dc_live_hosts_->size());
   } else {
     per_remote_dc_live_hosts_.add_host_to_dc(dc, host);
   }
@@ -87,6 +90,10 @@ void DCAwarePolicy::on_remove(const Host::Ptr& host) {
   const std::string& dc = host->dc();
   if (dc == local_dc_) {
     remove_host(local_dc_live_hosts_, host);
+    LOG_INFO(
+        "2536: Removing a host from the local_dc_live_hosts_ list, total "
+        "live_hosts count: %zu", local_dc_live_hosts_->size());
+
   } else {
     per_remote_dc_live_hosts_.remove_host_from_dc(host->dc(), host);
   }
