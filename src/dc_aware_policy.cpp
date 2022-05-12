@@ -178,7 +178,7 @@ Host::Ptr DCAwarePolicy::DCAwareQueryPlan::compute_next() {
   }
 
   if (policy_->skip_remote_dcs_for_local_cl_ && is_dc_local(cl_)) {
-    LOG_INFO("2536:Inside DCAwarePolicy::DCAwareQueryPlan to dc_local host.");
+    LOG_INFO("2536:Inside DCAwarePolicy::DCAwareQueryPlan to dc_local host. local_remaining_:%zu", local_remaining_);
     return Host::Ptr();
   }
 
